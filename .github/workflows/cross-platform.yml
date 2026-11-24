@@ -1,0 +1,36 @@
+name: Validate Mac and Windows packages
+
+on:
+  push:
+    branches: [codex/verify-cross-platform]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  packaged-backup:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: macos-latest
+            archive: token-pulse-mac.zip
+          - runner: windows-latest
+            archive: token-pulse-windows.zip
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Extract Mac package
+        if: runner.os == 'macOS'
+        run: ditto -x -k "${{ matrix.archive }}" extracted
+      - name: Extract Windows package
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: Expand-Archive -LiteralPath "${{ matrix.archive }}" -DestinationPath extracted
+      - name: Validate usage, backup, import, and restore
+        run: node .github/smoke/backup-smoke.mjs "extracted/Token Pulse"

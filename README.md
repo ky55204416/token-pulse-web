@@ -6,12 +6,14 @@
 
 ## 自动查看本机用量
 
-1. [下载 Mac 本地运行包](https://ky55204416.github.io/token-pulse-web/token-pulse-mac.zip)，解压并双击「打开我的算力看板.command」。需要 Node.js 22.15 或更新版本。如果已打开旧版，先退出旧版再启动新版。
-2. 保持本机版运行，打开 GitHub 网页版，点击「刷新本机数据」，再在本机页面选择「允许并打开网页版」。也可以从本机看板点击「连接网页版」。
-3. 授权后，在网页版点击「刷新本机数据」，自动加载近 30 天的用量。若浏览器询问是否允许连接本机网络，选择允许。
+1. 下载 [Windows 版](https://ky55204416.github.io/token-pulse-web/token-pulse-windows.zip) 或 [Mac 版](https://ky55204416.github.io/token-pulse-web/token-pulse-mac.zip)，解压后双击启动文件。Windows 使用「Start Token Pulse.cmd」，Mac 使用「打开我的算力看板.command」。两版均需 Node.js 22.15 或更新版本。更新时先退出正在运行的旧版。
+2. 保持本机版运行，在网页点击「刷新本机数据」，再在本机页面选择「允许并打开网页版」。也可以在本机看板点击「连接网页版」。
+3. 授权后，在网页版点击「刷新本机数据」，自动加载近 30 天用量。如浏览器询问是否允许连接本机网络，选择允许。
 
-用量日志、对话内容、项目名称和文件路径保留在本机。网页版读取的是用量汇总。会话备份可在本机版操作。
+## 备份与导入
 
-也可以打开网页体验示例，或手动导入已有的智脉摘要 JSON。Windows 和 macOS 都可以使用这些网页版功能。
+Windows 和 Mac 本机看板均可从「历史与备份」创建轻量或完整备份、选择保存位置、导入智脉备份文件并恢复已归档的附件。备份使用相同的 `.compute-backup` 格式。已有加密备份用原密码打开。
+
+原始日志、对话内容、项目名称和文件路径保留在本机。公开网页可体验示例、读取已授权的本机用量汇总或手动导入已有的智脉摘要。
 
 段位体系参考 [TokenBurn](https://github.com/yibeigen/tokenburn)。上游许可见 [TokenBurn-LICENSE.txt](./TokenBurn-LICENSE.txt)。
