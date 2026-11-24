@@ -1,0 +1,14 @@
+.web-entry { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px 28px; margin-bottom: 18px; }
+.web-entry-copy h2 { margin: 0 0 6px; }
+.web-entry-copy p { margin: 4px 0; color: var(--muted); line-height: 1.65; }
+.web-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.web-entry .web-primary { background: var(--cyan); border-color: var(--cyan); color: var(--surface); font-weight: 700; }
+.web-download { display: inline-flex; align-items: center; text-decoration: none; }
+.web-status { grid-column: 1 / -1; margin: 0; }
+.web-status--error { color: var(--amber); }
+.web-entry [hidden] { display: none; }
+footer a { color: inherit; }
+
+@media (max-width: 740px) {
+  .web-entry { grid-template-columns: 1fr; }
+}

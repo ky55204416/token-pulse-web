@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07111f">
+    <meta name="description" content="在一张看板里查看 Codex、Claude Code 和 Workbuddy 的 Token 用量、模型分布与推理强度。">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+    <title>智脉 · TOKEN PULSE</title>
+    <link rel="icon" type="image/png" href="./pulse-icon.png">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./insights.css">
+    <link rel="stylesheet" href="./web.css">
+    <script defer src="./units.js"></script>
+    <script defer src="./insights.js"></script>
+    <script defer src="./public-data.js"></script>
+    <script defer src="./web.js"></script>
+    <script defer src="./app.js"></script>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="masthead">
+        <div class="brand">
+          <img class="mark" src="./pulse-icon.png" width="42" height="42" alt="">
+          <div class="brand-copy">
+            <h1>智脉</h1>
+            <p class="brand-wordmark" lang="en">TOKEN PULSE</p>
+            <p class="brand-description" lang="en"><em>AI Usage &amp; Agent Intelligence Dashboard</em></p>
+            <p class="brand-tagline">每一次 Token 消耗，都是 AI 的一次心跳。</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <span id="data-state" class="state state--loading" role="status">正在准备示例</span>
+          <button id="theme-toggle" class="button button--quiet" type="button" aria-pressed="false">浅色模式</button>
+        </div>
+      </header>
+      <section class="panel web-entry" aria-labelledby="web-entry-heading">
+        <div class="web-entry-copy">
+          <h2 id="web-entry-heading">查看你的 AI 用量</h2>
+          <p>在智脉 Mac 版的「会话与战报」下载摘要 JSON，再导入这里。文件只在当前浏览器页面读取。</p>
+          <p>Mac 版可自动读取本机 Codex、Claude Code 和 Workbuddy 的用量，支持会话与文件备份。需要 Node.js 22.15 或更新版本。</p>
+        </div>
+        <div class="web-actions">
+          <button id="import-summary" class="button web-primary" type="button">导入用量摘要</button>
+          <input id="summary-file" type="file" accept=".json,application/json" hidden>
+          <a class="button button--quiet web-download" href="./token-pulse-mac.zip" download>下载 Mac 版</a>
+          <button id="reset-demo" class="button button--quiet" type="button" hidden>返回示例</button>
+        </div>
+        <p id="import-status" class="web-status minor" role="status" hidden></p>
+      </section>
+      <nav class="page-nav" aria-label="看板模块">
+        <a href="#overview">总览</a>
+        <a href="#advanced-insights">多维分析与日历</a>
+        <a href="#reasoning-effort">推理强度</a>
+      </nav>
+      <section class="controlbar" aria-label="当前统计范围">
+        <label class="unit-control">算力单位
+          <select id="unit-select">
+            <option value="zh">中文 · 万 / 亿</option>
+            <option value="en">English · K / M / B</option>
+          </select>
+        </label>
+        <p id="date-window" class="date-window">正在加载</p>
+      </section>
+      <section id="overview" class="metrics" aria-label="关键指标">
+        <article class="metric"><p>消耗 Token</p><strong id="metric-total">—</strong><span id="metric-total-note"></span></article>
+        <article class="metric"><p>活跃天数</p><strong id="metric-days">—</strong><span id="metric-days-note"></span></article>
+        <article class="metric"><p>独立会话</p><strong id="metric-sessions">—</strong><span id="metric-sessions-note"></span></article>
+        <article class="metric metric--split"><p>输入 / 输出</p><strong id="metric-split">—</strong><span id="metric-split-note"></span></article>
+      </section>
+      <section id="advanced-insights" class="dashboard-extension" aria-label="多维分析与日历"></section>
+      <section class="dashboard-grid">
+        <article class="panel usage-panel"><div class="panel-heading"><h2>每日算力流量</h2><div id="chart-legend" class="legend" aria-label="渠道图例"></div></div><div class="canvas-wrap"><canvas id="daily-chart" aria-label="每日渠道 Token 堆叠柱状图。获得焦点后可用左右方向键查看每日明细" role="img" tabindex="0"></canvas><div id="chart-tip" class="chart-tip" role="status" aria-live="polite" hidden></div></div><div id="daily-table" class="sr-only"></div></article>
+        <article class="panel source-panel"><div class="panel-heading"><h2>渠道构成</h2><span id="source-count" class="minor">—</span></div><div id="source-list" class="source-list"></div></article>
+        <article class="panel model-panel">
+          <div class="panel-heading"><h2>模型分布</h2></div>
+          <section id="reasoning-effort" class="effort-panel" aria-labelledby="effort-heading">
+            <h3 id="effort-heading">推理强度</h3>
+            <div id="effort-summary"></div>
+          </section>
+          <div id="model-list" class="model-list"></div>
+        </article>
+        <article class="panel quality-panel"><div class="panel-heading"><h2>数据覆盖</h2></div><div id="quality-list" class="quality-list"></div></article>
+      </section>
+      <footer><span id="last-updated"></span><a href="https://github.com/yibeigen/tokenburn">致谢 TokenBurn</a></footer>
+    </main>
+  </body>
+</html>
