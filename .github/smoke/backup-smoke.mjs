@@ -5,6 +5,7 @@ import net from 'node:net';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { setTimeout as wait } from 'node:timers/promises';
+import { pathToFileURL } from 'node:url';
 
 const [packageDirectory] = process.argv.slice(2);
 assert(packageDirectory, 'Usage: node backup-smoke.mjs <extracted package root>');
@@ -37,7 +38,12 @@ let childExit;
 
 try {
   await mkdir(packageRoot, { recursive: true });
-  await cp(path.join(source, 'app'), path.join(packageRoot, 'app'), { recursive: true });
+  const packageApp = path.join(source, 'app');
+  await cp(packageApp, path.join(packageRoot, 'app'), {
+    recursive: true,
+    filter: candidate => !path.relative(packageApp, candidate).split(path.sep)
+      .some(part => part.startsWith('.') || part === 'node_modules'),
+  });
   await mkdir(project);
   const attachment = Buffer.from('Synthetic screenshot fixture\n'.repeat(4000), 'utf8');
   await writeFile(path.join(project, '截图.png'), attachment);
@@ -71,9 +77,10 @@ try {
 
   const port = await reservePort();
   const base = `http://127.0.0.1:${port}`;
-  child = spawn(process.execPath, ['--import', preload, 'app/server.mjs'], {
+  child = spawn(process.execPath, ['--import', pathToFileURL(preload).href, 'app/server.mjs'], {
     cwd: packageRoot,
     env: { ...process.env, CODEX_HOME: codexHome, CLAUDE_CONFIG_DIR: path.join(profile, '.claude'),
+      TOKEN_PULSE_WORKBUDDY_DIR: path.join(profile, '.workbuddy'),
       APPDATA: path.join(profile, 'AppData', 'Roaming'), LOCALAPPDATA: path.join(profile, 'AppData', 'Local'),
       TOKEN_PULSE_TEST_PROFILE: profile, COMPUTE_DASHBOARD_PORT: String(port) },
     stdio: ['ignore', 'pipe', 'pipe'],
