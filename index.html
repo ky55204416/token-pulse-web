@@ -37,11 +37,12 @@
       <section class="panel web-entry" aria-labelledby="web-entry-heading">
         <div class="web-entry-copy">
           <h2 id="web-entry-heading">查看你的 AI 用量</h2>
-          <p>首次解压 Mac 版并双击「打开我的算力看板.command」。再点「刷新本机数据」授权连接，智脉会自动查找 Codex、Claude Code 和 Workbuddy 的用量记录。</p>
-          <p>本机版需要 Node.js 22.15 或更新版本。已有摘要也可以直接导入。</p>
+          <p>首次下载并解压对应的本机版。Windows 双击「Start Token Pulse.cmd」，Mac 双击「打开我的算力看板.command」。然后在这里点击「刷新本机数据」授权连接。</p>
+          <p>备份与恢复在本机版的「历史与备份」中操作。两版均需要 Node.js 22.15 或更新版本。</p>
         </div>
         <div class="web-actions">
           <button id="refresh-local" class="button web-primary" type="button">刷新本机数据</button>
+          <a class="button button--quiet web-download" href="./token-pulse-windows.zip" download>下载 Windows 版</a>
           <a class="button button--quiet web-download" href="./token-pulse-mac.zip" download>下载 Mac 版</a>
           <button id="import-summary" class="button button--quiet" type="button">导入用量摘要</button>
           <input id="summary-file" type="file" accept=".json,application/json" hidden>
