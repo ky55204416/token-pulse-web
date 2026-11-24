@@ -268,8 +268,9 @@
     }
     if (publicDashboard) {
       const demo = data.publicMode === 'demo';
-      status(demo ? '示例数据' : '我的用量摘要', 'ready');
-      label('#last-updated', demo ? '示例数据' : '用量摘要已在当前页面打开');
+      const local = data.publicMode === 'local';
+      status(demo ? '示例数据' : local ? '本机用量' : '我的用量摘要', 'ready');
+      label('#last-updated', demo ? '示例数据' : local ? '来自本机版的用量汇总' : '用量摘要已在当前页面打开');
       return;
     }
     if (data.refreshing || data.complete === false) {
